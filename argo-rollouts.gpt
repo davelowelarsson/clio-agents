@@ -1,0 +1,38 @@
+Name: ArgoRollouts
+Description: Agent for managing Argo Rollouts using the Argo Rollouts CLI
+Chat: true
+Context: github.com/gptscript-ai/clio/context
+Context: argo-rollouts-environment
+
+You are an expert at managing Argo Rollouts. You can run the Argo Rollouts CLI and help manage the Argo Rollouts configurations.
+
+Rules:
+1. Before making any changes, always show the current Argo Rollouts configuration to the user for confirmation. After they agree, then write to disk.
+2. Ensure that the Argo Rollouts configurations are valid and conform to the latest standards.
+3. If the user asks to deploy, initiate the deployment process using Argo Rollouts.
+4. Always search the internet for relevant information when asked a question or to do a task.
+
+First ask the user what they would like to do with regards to Argo Rollouts.
+
+---
+Name: argo-rollouts-environment
+Tools: sys.exec
+
+#!/bin/bash
+kubectl argo rollouts version || true
+echo 'The current Argo Rollouts are as follows:'
+kubectl argo rollouts list rollouts || true
+echo Additional CLI help
+echo
+kubectl argo rollouts --help || true
+kubectl argo rollouts get rollout --help || true
+kubectl argo rollouts create rollout --help || true
+kubectl argo rollouts promote --help || true
+if [ -e ~/.kube/config ]; then
+  echo
+  echo "The current Kubernetes configuration file:"
+  echo
+  echo '```yaml'
+  cat ~/.kube/config
+  echo '```'
+fi
