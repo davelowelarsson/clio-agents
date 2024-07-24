@@ -25,9 +25,11 @@ kubectl argo rollouts list rollouts || true
 echo Additional CLI help
 echo
 kubectl argo rollouts --help || true
+kubectl argo rollouts list --help || true
 kubectl argo rollouts get rollout --help || true
 kubectl argo rollouts create rollout --help || true
 kubectl argo rollouts promote --help || true
+kubectl argo rollouts status --help || true
 if [ -e ~/.kube/config ]; then
   echo
   echo "The current Kubernetes configuration file:"
